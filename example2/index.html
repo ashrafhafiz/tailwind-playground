@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="app.css" />
+    <style type="text/css">
+      .vfm--fixed[data-v-2836fdb5] {
+        position: fixed;
+      }
+      .vfm--absolute[data-v-2836fdb5] {
+        position: absolute;
+      }
+      .vfm--inset[data-v-2836fdb5] {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+      .vfm--overlay[data-v-2836fdb5] {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .vfm--prevent-none[data-v-2836fdb5] {
+        pointer-events: none;
+      }
+      .vfm--prevent-auto[data-v-2836fdb5] {
+        pointer-events: auto;
+      }
+      .vfm--outline-none[data-v-2836fdb5]:focus {
+        outline: none;
+      }
+      .vfm-enter-active[data-v-2836fdb5],
+      .vfm-leave-active[data-v-2836fdb5] {
+        transition: opacity 0.2s;
+      }
+      .vfm-enter-from[data-v-2836fdb5],
+      .vfm-leave-to[data-v-2836fdb5] {
+        opacity: 0;
+      }
+      .vfm--touch-none[data-v-2836fdb5] {
+        touch-action: none;
+      }
+      .vfm--select-none[data-v-2836fdb5] {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .vfm--resize-tr[data-v-2836fdb5],
+      .vfm--resize-br[data-v-2836fdb5],
+      .vfm--resize-bl[data-v-2836fdb5],
+      .vfm--resize-tl[data-v-2836fdb5] {
+        width: 12px;
+        height: 12px;
+        z-index: 10;
+      }
+      .vfm--resize-t[data-v-2836fdb5] {
+        top: -6px;
+        left: 0;
+        width: 100%;
+        height: 12px;
+        cursor: ns-resize;
+      }
+      .vfm--resize-tr[data-v-2836fdb5] {
+        top: -6px;
+        right: -6px;
+        cursor: nesw-resize;
+      }
+      .vfm--resize-r[data-v-2836fdb5] {
+        top: 0;
+        right: -6px;
+        width: 12px;
+        height: 100%;
+        cursor: ew-resize;
+      }
+      .vfm--resize-br[data-v-2836fdb5] {
+        bottom: -6px;
+        right: -6px;
+        cursor: nwse-resize;
+      }
+      .vfm--resize-b[data-v-2836fdb5] {
+        bottom: -6px;
+        left: 0;
+        width: 100%;
+        height: 12px;
+        cursor: ns-resize;
+      }
+      .vfm--resize-bl[data-v-2836fdb5] {
+        bottom: -6px;
+        left: -6px;
+        cursor: nesw-resize;
+      }
+      .vfm--resize-l[data-v-2836fdb5] {
+        top: 0;
+        left: -6px;
+        width: 12px;
+        height: 100%;
+        cursor: ew-resize;
+      }
+      .vfm--resize-tl[data-v-2836fdb5] {
+        top: -6px;
+        left: -6px;
+        cursor: nwse-resize;
+      }
+    </style>
+    <style type="text/css">
+      #nprogress {
+        pointer-events: none;
+      }
+
+      #nprogress .bar {
+        background: #32c5ff;
+
+        position: fixed;
+        z-index: 1031;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 2px;
+      }
+
+      #nprogress .peg {
+        display: block;
+        position: absolute;
+        right: 0px;
+        width: 100px;
+        height: 100%;
+        box-shadow: 0 0 10px #32c5ff, 0 0 5px #32c5ff;
+        opacity: 1;
+
+        -webkit-transform: rotate(3deg) translate(0px, -4px);
+        -ms-transform: rotate(3deg) translate(0px, -4px);
+        transform: rotate(3deg) translate(0px, -4px);
+      }
+
+      #nprogress .spinner {
+        display: block;
+        position: fixed;
+        z-index: 1031;
+        top: 15px;
+        right: 15px;
+      }
+
+      #nprogress .spinner-icon {
+        width: 18px;
+        height: 18px;
+        box-sizing: border-box;
+
+        border: solid 2px transparent;
+        border-top-color: #32c5ff;
+        border-left-color: #32c5ff;
+        border-radius: 50%;
+
+        -webkit-animation: nprogress-spinner 400ms linear infinite;
+        animation: nprogress-spinner 400ms linear infinite;
+      }
+
+      .nprogress-custom-parent {
+        overflow: hidden;
+        position: relative;
+      }
+
+      .nprogress-custom-parent #nprogress .spinner,
+      .nprogress-custom-parent #nprogress .bar {
+        position: absolute;
+      }
+
+      @-webkit-keyframes nprogress-spinner {
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+      @keyframes nprogress-spinner {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Login -->
+    <div
+      class="vfm vfm--inset vfm--fixed"
+      data-js="login-modal"
+      data-v-2836fdb5=""
+      style="z-index: 1002"
+    >
+      <div
+        class="vfm__overlay vfm--overlay vfm--absolute vfm--inset"
+        data-v-2836fdb5=""
+      ></div>
+      <div
+        class="vfm__container vfm--absolute vfm--inset vfm--outline-none tw-flex tw-items-center tw-justify-center"
+        aria-expanded="true"
+        role="dialog"
+        aria-modal="true"
+        tabindex="-1"
+        data-v-2836fdb5=""
+        style=""
+      >
+        <div
+          class="vfm__content tw-bg-white tw-relative tw-rounded-2xl tw-max-h-90 md:tw-mx-auto tw-w-full tw-overflow-auto tw-m-4 md:tw-m-0 tw-px-6 tw-py-9 tw-flex tw-flex-col"
+          data-v-2836fdb5=""
+          style="height: 600px; max-width: 600px"
+        >
+          <section
+            class="tw-h-full tw-w-full tw-px-0 lg:tw-px-4"
+            data-v-2836fdb5-s=""
+            style="padding: 0px"
+          >
+            <button
+              class="tw-pin-0 tw-absolute tw-right-4 tw-z-10 tw-flex tw-h-10 tw-w-10 tw--translate-y-0 tw-transform tw-items-center tw-justify-center tw-rounded-xl tw-bg-grey-400 tw-text-grey-800 tw-transition-all hover:tw-bg-grey-500 hover:tw-text-blue hover:tw-shadow md:tw--translate-y-1/2"
+              data-v-2836fdb5-s=""
+            >
+              <svg width="16" viewBox="0 0 12 16" class="tw-fill-current">
+                <path
+                  d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"
+                ></path>
+              </svg>
+            </button>
+            <div
+              class="tw-flex tw-h-full tw-flex-col tw-justify-between tw-px-4"
+              data-v-2836fdb5-s=""
+            >
+              <div class="tw-w-full tw-flex-1 md:tw-px-10" data-v-2836fdb5-s="">
+                <div
+                  class="tw-h-full tw-flex tw-items-center md:tw-py-8"
+                  data-v-2836fdb5-s=""
+                >
+                  <div class="container tw-mx-auto tw-w-full">
+                    <div class="tw-mx-auto tw-max-w-xs">
+                      <h1
+                        class="tw-text-3xl tw-font-light tw-tracking-tight tw-mb-8 tw-text-center tw-text-black phone:tw-px-10 phone:tw-pt-10"
+                      >
+                        Log In
+                      </h1>
+                      <div class="tw-mt-8">
+                        <form>
+                          <div class="control" data-js="email_field">
+                            <label
+                              class="tw-block tw-text-xs tw-font-medium tw-text-grey-800 tw-block tw-text-2xs tw-text-grey-800"
+                              for="email"
+                              >Email</label
+                            >
+                            <div
+                              class="tw-relative tw-flex tw-items-center tw-border-b tw-border-solid tw-border-grey-500"
+                            >
+                              <input
+                                id="email_16263.770731283706"
+                                type="text"
+                                name="email_16263.770731283706"
+                                data-js="email"
+                                class="input is-minimal tw-text-sm"
+                                autocomplete="username"
+                                placeholder="Enter Email"
+                                required=""
+                                style="border: none"
+                              />
+                              <div
+                                class="tw-w-4 tw-h-4 tw-rounded-full tw-p-1 tw-mx-auto tw-flex tw-justify-center tw-items-center tw-absolute tw-right-0 tw--mt-px tw-bg-grey"
+                              >
+                                <svg width="10" height="8" viewBox="0 0 10 8">
+                                  <path
+                                    fill="#FFF"
+                                    fill-rule="evenodd"
+                                    stroke="#FFF"
+                                    stroke-width=".728"
+                                    d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"
+                                  ></path>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="control" data-js="password_field">
+                            <label
+                              class="tw-block tw-text-xs tw-font-medium tw-text-grey-800 tw-block tw-text-2xs tw-text-grey-800"
+                              for="password"
+                              >Password</label
+                            >
+                            <div
+                              class="tw-relative tw-flex tw-items-center tw-border-b tw-border-solid tw-border-grey-500"
+                            >
+                              <input
+                                id="password_79914.29337891213"
+                                type="password"
+                                name="password_79914.29337891213"
+                                data-js="password"
+                                class="input is-minimal tw-text-sm"
+                                autocomplete="current-password"
+                                placeholder="Enter Password"
+                                modelmodifiers="[object Object]"
+                                required=""
+                                style="border: none"
+                              /><button
+                                type="button"
+                                title="Toggle private mode"
+                                class="tw-ml-4 tw-pr-8 tw-text-2xs tw-font-bold tw-text-grey"
+                              >
+                                Show
+                              </button>
+                              <div
+                                class="tw-w-4 tw-h-4 tw-rounded-full tw-p-1 tw-mx-auto tw-flex tw-justify-center tw-items-center tw-absolute tw-right-0 tw--mt-px tw-bg-grey"
+                              >
+                                <svg width="10" height="8" viewBox="0 0 10 8">
+                                  <path
+                                    fill="#FFF"
+                                    fill-rule="evenodd"
+                                    stroke="#FFF"
+                                    stroke-width=".728"
+                                    d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"
+                                  ></path>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="tw-text-center tw-mt-10">
+                            <button
+                              type="submit"
+                              class="tw-btn tw-btn-blue tw-w-full"
+                            >
+                              Log In
+                            </button>
+                            <button
+                              class="tw-mx-auto tw-mt-4 tw-block tw-text-sm tw-text-grey-800 hover:tw-underline"
+                            >
+                              Forgot Your Password?
+                            </button>
+                            <button
+                              class="tw-mx-auto tw-mt-4 tw-block tw-text-sm tw-text-grey-800 hover:tw-underline tw-text-blue tw-font-semibold"
+                            >
+                              Sign Up
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!-- /Login -->
+
+    <!-- Signup -->
+    <!-- <div
+      class="vfm vfm--inset vfm--fixed"
+      data-js="sign-up-modal"
+      data-v-2836fdb5=""
+      style="z-index: 1000"
+    >
+      <div
+        class="vfm__overlay vfm--overlay vfm--absolute vfm--inset"
+        data-v-2836fdb5=""
+      ></div>
+      <div
+        class="vfm__container vfm--absolute vfm--inset vfm--outline-none tw-flex tw-items-center tw-justify-center"
+        aria-expanded="true"
+        role="dialog"
+        aria-modal="true"
+        tabindex="-1"
+        data-v-2836fdb5=""
+        style=""
+      >
+        <div
+          class="vfm__content tw-bg-white tw-relative tw-rounded-2xl tw-max-h-90 md:tw-mx-auto tw-w-full tw-overflow-auto tw-m-4 md:tw-m-0 tw-px-6 tw-py-9 tw-flex tw-flex-col"
+          data-v-2836fdb5=""
+          style="max-width: 600px"
+        >
+          <section
+            class="tw-h-full tw-w-full tw-px-0 lg:tw-px-4"
+            data-v-2836fdb5-s=""
+            style="padding: 0px"
+          >
+            <button
+              class="tw-pin-0 tw-absolute tw-right-4 tw-z-10 tw-flex tw-h-10 tw-w-10 tw--translate-y-0 tw-transform tw-items-center tw-justify-center tw-rounded-xl tw-bg-grey-400 tw-text-grey-800 tw-transition-all hover:tw-bg-grey-500 hover:tw-text-blue hover:tw-shadow md:tw--translate-y-1/2"
+              data-v-2836fdb5-s=""
+            >
+              <svg width="16" viewBox="0 0 12 16" class="tw-fill-current">
+                <path
+                  d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"
+                ></path>
+              </svg>
+            </button>
+            <div
+              class="tw-flex tw-h-full tw-flex-col tw-justify-between tw-px-4"
+              data-v-2836fdb5-s=""
+            >
+              <div class="tw-w-full tw-flex-1 md:tw-px-10" data-v-2836fdb5-s="">
+                <div
+                  class="tw-h-full tw-flex tw-items-center md:tw-py-8"
+                  data-v-2836fdb5-s=""
+                >
+                  <div class="container tw-mx-auto tw-w-full">
+                    <div class="tw-mx-auto tw-max-w-xs">
+                      <header
+                        class="tw-flex tw-text-center tw-items-center tw-justify-center"
+                      >
+                        <h1
+                          class="tw-text-3xl tw-font-light tw-tracking-tight tw-mb-8 tw-text-center tw-text-black phone:tw-px-10 phone:tw-pt-10"
+                        >
+                          Sign Up!
+                        </h1>
+                      </header>
+                      <div class="tw-mt-8">
+                        <form>
+                          <div class="control" data-js="username_field">
+                            <label
+                              class="tw-block tw-text-xs tw-font-medium tw-text-grey-800 tw-block tw-text-2xs tw-text-grey-800"
+                              for="username"
+                              >Username</label
+                            >
+                            <div
+                              class="tw-relative tw-flex tw-items-center tw-border-b tw-border-solid tw-border-grey-500"
+                            >
+                              <input
+                                id="username_26846.492789101707"
+                                type="text"
+                                name="username_26846.492789101707"
+                                data-js="username"
+                                class="input is-minimal tw-text-sm"
+                                autocomplete="username"
+                                placeholder="Enter Username"
+                                required=""
+                                style="border: none"
+                              />
+                              <div
+                                class="tw-w-4 tw-h-4 tw-rounded-full tw-p-1 tw-mx-auto tw-flex tw-justify-center tw-items-center tw-absolute tw-right-0 tw--mt-px tw-bg-grey"
+                              >
+                                <svg width="10" height="8" viewBox="0 0 10 8">
+                                  <path
+                                    fill="#FFF"
+                                    fill-rule="evenodd"
+                                    stroke="#FFF"
+                                    stroke-width=".728"
+                                    d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"
+                                  ></path>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="control" data-js="email_field">
+                            <label
+                              class="tw-block tw-text-xs tw-font-medium tw-text-grey-800 tw-block tw-text-2xs tw-text-grey-800"
+                              for="email"
+                              >Email</label
+                            >
+                            <div
+                              class="tw-relative tw-flex tw-items-center tw-border-b tw-border-solid tw-border-grey-500"
+                            >
+                              <input
+                                id="email_6968.301633705189"
+                                type="email"
+                                name="email_6968.301633705189"
+                                data-js="email"
+                                class="input is-minimal tw-text-sm"
+                                autocomplete="email"
+                                placeholder="Enter Email"
+                                required=""
+                                style="border: none"
+                              />
+                              <div
+                                class="tw-w-4 tw-h-4 tw-rounded-full tw-p-1 tw-mx-auto tw-flex tw-justify-center tw-items-center tw-absolute tw-right-0 tw--mt-px tw-bg-grey"
+                              >
+                                <svg width="10" height="8" viewBox="0 0 10 8">
+                                  <path
+                                    fill="#FFF"
+                                    fill-rule="evenodd"
+                                    stroke="#FFF"
+                                    stroke-width=".728"
+                                    d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"
+                                  ></path>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="control" data-js="password_field">
+                            <label
+                              class="tw-block tw-text-xs tw-font-medium tw-text-grey-800 tw-block tw-text-2xs tw-text-grey-800"
+                              for="password"
+                              >Password</label
+                            >
+                            <div
+                              class="tw-relative tw-flex tw-items-center tw-border-b tw-border-solid tw-border-grey-500"
+                            >
+                              <input
+                                id="password_62804.43993746711"
+                                type="password"
+                                name="password_62804.43993746711"
+                                data-js="password"
+                                class="input is-minimal tw-text-sm"
+                                autocomplete="new-password"
+                                placeholder="Enter Password"
+                                required=""
+                                style="border: none"
+                              /><button
+                                type="button"
+                                title="Toggle private mode"
+                                class="tw-ml-4 tw-pr-8 tw-text-2xs tw-font-bold tw-text-grey"
+                              >
+                                Show
+                              </button>
+                              <div
+                                class="tw-w-4 tw-h-4 tw-rounded-full tw-p-1 tw-mx-auto tw-flex tw-justify-center tw-items-center tw-absolute tw-right-0 tw--mt-px tw-bg-grey"
+                              >
+                                <svg width="10" height="8" viewBox="0 0 10 8">
+                                  <path
+                                    fill="#FFF"
+                                    fill-rule="evenodd"
+                                    stroke="#FFF"
+                                    stroke-width=".728"
+                                    d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"
+                                  ></path>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <div
+                              class="grecaptcha-badge"
+                              data-style="bottomright"
+                              style="
+                                width: 256px;
+                                height: 60px;
+                                display: block;
+                                transition: right 0.3s ease 0s;
+                                position: fixed;
+                                bottom: 14px;
+                                right: -186px;
+                                box-shadow: gray 0px 0px 5px;
+                                border-radius: 2px;
+                                overflow: hidden;
+                              "
+                            >
+                              <div class="grecaptcha-logo">
+                                <iframe
+                                  title="reCAPTCHA"
+                                  src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcdNFYUAAAAAIDK9F6CBZ660yOrxEyUYme687b2&amp;co=aHR0cHM6Ly9sYXJhY2FzdHMuY29tOjQ0Mw..&amp;hl=en&amp;v=1B_yv3CBEV10KtI2HJ6eEXhJ&amp;size=invisible&amp;cb=3a0puw9du9h8"
+                                  width="256"
+                                  height="60"
+                                  role="presentation"
+                                  name="a-13i6v5ti8t85"
+                                  frameborder="0"
+                                  scrolling="no"
+                                  sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"
+                                ></iframe>
+                              </div>
+                              <div class="grecaptcha-error"></div>
+                              <textarea
+                                id="g-recaptcha-response"
+                                name="g-recaptcha-response"
+                                class="g-recaptcha-response"
+                                style="
+                                  width: 250px;
+                                  height: 40px;
+                                  border: 1px solid rgb(193, 193, 193);
+                                  margin: 10px 25px;
+                                  padding: 0px;
+                                  resize: none;
+                                  display: none;
+                                "
+                              ></textarea>
+                            </div>
+                            <iframe style="display: none"></iframe>
+                          </div>
+                          <div class="control tw-text-center tw-mt-10">
+                            <button
+                              type="submit"
+                              class="tw-btn tw-btn-blue tw-w-full md:tw-max-w-2/3 tw-mx-auto"
+                            >
+                              Create Account</button
+                            ><button
+                              class="tw-mx-auto tw-mt-4 tw-block tw-text-sm tw-text-grey-800 hover:tw-underline"
+                            >
+                              Already Have an Account?
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div> -->
+    <!-- /Signup -->
+
+    <!-- Forgot passord -->
+    <!-- <div
+      class="vfm vfm--inset vfm--fixed"
+      data-js="forgot-password-modal"
+      data-v-2836fdb5=""
+      style="z-index: 1000"
+    >
+      <div
+        class="vfm__overlay vfm--overlay vfm--absolute vfm--inset"
+        data-v-2836fdb5=""
+      ></div>
+      <div
+        class="vfm__container vfm--absolute vfm--inset vfm--outline-none tw-flex tw-items-center tw-justify-center"
+        aria-expanded="true"
+        role="dialog"
+        aria-modal="true"
+        tabindex="-1"
+        data-v-2836fdb5=""
+        style=""
+      >
+        <div
+          class="vfm__content tw-bg-white tw-relative tw-rounded-2xl tw-max-h-90 md:tw-mx-auto tw-w-full tw-overflow-auto tw-m-4 md:tw-m-0 tw-px-6 tw-py-9 tw-flex tw-flex-col"
+          data-v-2836fdb5=""
+          style="height: 600px; max-width: 600px"
+        >
+          <section
+            class="tw-h-full tw-w-full tw-px-0 lg:tw-px-4"
+            data-v-2836fdb5-s=""
+            style="padding: 0px"
+          >
+            <button
+              class="tw-pin-0 tw-absolute tw-right-4 tw-z-10 tw-flex tw-h-10 tw-w-10 tw--translate-y-0 tw-transform tw-items-center tw-justify-center tw-rounded-xl tw-bg-grey-400 tw-text-grey-800 tw-transition-all hover:tw-bg-grey-500 hover:tw-text-blue hover:tw-shadow md:tw--translate-y-1/2"
+              data-v-2836fdb5-s=""
+            >
+              <svg width="16" viewBox="0 0 12 16" class="tw-fill-current">
+                <path
+                  d="M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48z"
+                ></path>
+              </svg>
+            </button>
+            <div
+              class="tw-flex tw-h-full tw-flex-col tw-justify-between tw-px-4"
+              data-v-2836fdb5-s=""
+            >
+              <div class="tw-w-full tw-flex-1 md:tw-px-10" data-v-2836fdb5-s="">
+                <div
+                  class="tw-h-full tw-flex tw-items-center md:tw-py-8"
+                  data-v-2836fdb5-s=""
+                >
+                  <div class="container tw-mx-auto tw-w-full">
+                    <div class="tw-mx-auto tw-max-w-xs">
+                      <div class="tw-mt-8">
+                        <h1
+                          class="tw-text-3xl tw-font-light tw-tracking-tight tw-mb-8 tw-text-center tw-text-black phone:tw-px-10 phone:tw-pt-10"
+                        >
+                          Forgot Your Password?
+                        </h1>
+                        <form>
+                          <div>
+                            <div
+                              class="grecaptcha-badge"
+                              data-style="none"
+                              style="
+                                width: 256px;
+                                height: 60px;
+                                position: fixed;
+                                visibility: hidden;
+                              "
+                            >
+                              <div class="grecaptcha-logo">
+                                <iframe
+                                  title="reCAPTCHA"
+                                  src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcdNFYUAAAAAIDK9F6CBZ660yOrxEyUYme687b2&amp;co=aHR0cHM6Ly9sYXJhY2FzdHMuY29tOjQ0Mw..&amp;hl=en&amp;v=1B_yv3CBEV10KtI2HJ6eEXhJ&amp;size=invisible&amp;cb=v4t53g4yv5dy"
+                                  width="256"
+                                  height="60"
+                                  role="presentation"
+                                  name="a-1vk6tksgkff0"
+                                  frameborder="0"
+                                  scrolling="no"
+                                  sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"
+                                ></iframe>
+                              </div>
+                              <div class="grecaptcha-error"></div>
+                              <textarea
+                                id="g-recaptcha-response-1"
+                                name="g-recaptcha-response"
+                                class="g-recaptcha-response"
+                                style="
+                                  width: 250px;
+                                  height: 40px;
+                                  border: 1px solid rgb(193, 193, 193);
+                                  margin: 10px 25px;
+                                  padding: 0px;
+                                  resize: none;
+                                  display: none;
+                                "
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div class="control" data-js="email_field">
+                            <label
+                              class="tw-block tw-text-xs tw-font-medium tw-text-grey-800 tw-block tw-text-2xs tw-text-grey-800"
+                              for="email"
+                              >Email</label
+                            >
+                            <div
+                              class="tw-relative tw-flex tw-items-center tw-border-b tw-border-solid tw-border-grey-500"
+                            >
+                              <input
+                                id="email_95642.13711793104"
+                                type="email"
+                                name="email_95642.13711793104"
+                                data-js="email"
+                                class="input is-minimal tw-text-sm"
+                                autocomplete="email"
+                                placeholder="Enter Email"
+                                required=""
+                                style="border: none"
+                              />
+                              <div
+                                class="tw-w-4 tw-h-4 tw-rounded-full tw-p-1 tw-mx-auto tw-flex tw-justify-center tw-items-center tw-absolute tw-right-0 tw--mt-px tw-bg-grey"
+                              >
+                                <svg width="10" height="8" viewBox="0 0 10 8">
+                                  <path
+                                    fill="#FFF"
+                                    fill-rule="evenodd"
+                                    stroke="#FFF"
+                                    stroke-width=".728"
+                                    d="M3.533 5.646l-2.199-2.19c-.195-.194-.488-.194-.684 0-.195.195-.195.487 0 .682l2.883 2.87L9.055 1.51c.195-.194.195-.487 0-.681-.196-.195-.49-.195-.685 0L3.533 5.646z"
+                                  ></path>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="control tw-text-center tw-mt-10">
+                            <button
+                              type="submit"
+                              class="tw-btn tw-btn-blue tw-w-full"
+                            >
+                              Reset</button
+                            ><button
+                              class="tw-mx-auto tw-mt-4 tw-block tw-text-sm tw-text-grey-800 hover:tw-underline"
+                            >
+                              Or Sign In
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div> -->
+    <!-- /Forgot password -->
+  </body>
+</html>
